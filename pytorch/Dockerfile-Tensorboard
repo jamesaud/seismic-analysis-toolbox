@@ -1,0 +1,13 @@
+FROM continuumio/anaconda3
+
+# Could be python/3.5, I matched the other dockerfile for caching
+
+RUN pip install tensorflow
+
+WORKDIR /data
+
+ENTRYPOINT ["tensorboard"]
+
+EXPOSE 6006
+
+CMD ["--logdir", "."]
