@@ -4,6 +4,10 @@ I am researching using neural nets for earthquake detection.
 
 Pretty messy right now, I'll clean up the Repo at the end of this internship.
 
+(I accidentally deleted the repo's history, there should be a few hundred commits)
+
+
+
 ### Neural Nets for earthquake recognition
 
 1. Retrieving and processing the data:
