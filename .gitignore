@@ -1,0 +1,12 @@
+notebooks/Earthquake-audio-activity/
+**/*.mseed
+**/*.MSEED
+**/*.png
+**/*.PNG
+**/*.wav
+**/*.WAV
+**/*.wave
+**/*.zip
+**/*.pt
+/convnettorch/
+
