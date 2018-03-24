@@ -1,0 +1,7 @@
+More stations at the same locations for different Azimuth
+Change 1 degree to 1/4 degree
+More noise
+Fix time duration
+Change .mseed writing
+
+Remove limit on noise event query
