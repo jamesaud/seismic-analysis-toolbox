@@ -11,3 +11,8 @@ services:
             - 8888:8888
         volumes:
             - .:/data
+        deploy:
+          resources:
+            limits:
+              cpus: '6.0'
+              memory: 18000M
