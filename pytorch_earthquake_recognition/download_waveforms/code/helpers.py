@@ -6,6 +6,10 @@ import math
 from bisect import bisect
 from typing import List
 
+def create_directory(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
 
 def get_all_stations(max_radius) -> Inventory:
     """ Use this to find a valid station with the correct components """
@@ -25,7 +29,6 @@ def verify_fsdn(network, station):
     client = Client(CLIENT_NAME)
     time = STARTTIME + Day(365)
     waves = client.get_waveforms(network.code, station.code, "*", "HN*", time, time + DURATION)
-    #print(get_channel_names(waves))
     return True
 
 def get_valid_stations(inventory):
@@ -110,3 +113,22 @@ def get_noise_times(times_to_exclude: List[UTCDateTime],
 
     return noise_times
 
+def slide(iterable, num, stagger=None):
+    """
+    A sliding window over an iterator, yielding sub arrays.
+    @param iterable: Iterable
+    @param num: int, the size of each subarray
+    @param stagger: int, the number of elements to start the next subarray by
+
+    Example:
+    for arr in slide(list(range(98)), 5):
+        print(arr)
+    """
+    stagger = num - stagger if stagger else 0
+    start = 0
+    end = num
+
+    while start + stagger < len(iterable):
+        yield iterable[start:end]
+        start = end - stagger
+        end += num - stagger

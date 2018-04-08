@@ -1,17 +1,11 @@
-from types import MappingProxyType
-from obspy.core.utcdatetime import UTCDateTime
-from obspy.clients.fdsn import Client
 import os
 from collections import namedtuple
-from obspy.taup import TauPyModel
-
-
-def Day(num):
-    return 60*60*24*num
+from obspy.clients.fdsn import Client
+from obspy.core.utcdatetime import UTCDateTime
+from types import MappingProxyType
 
 # Holds a UTCDateTime start and end times of an event
 Time = namedtuple('Time', ('start', 'end'))
-model = TauPyModel(model="prem")
 
 class Names:
     Amatrice = 'Amatrice'
@@ -22,6 +16,11 @@ class Names:
     Costa = 'Costa'
     Puerto = 'Puerto'
     Utah = 'Utah'
+
+
+def Day(num):
+    return 60 * 60 * 24 * num
+
 
 def get_event_info(name):
     """
@@ -60,7 +59,6 @@ def get_event_info(name):
             Network="GS",
             Station='KAN01',
             StationRadius=1,
-            LocalEventRadius=1
         )
 
     elif name == Names.SouthAmerica:
@@ -72,13 +70,12 @@ def get_event_info(name):
             EndTime="2018-01-15",
             Client="IRIS",
             Name="SouthAmerica",
-            PrePadding=6,
-            PostPadding=14,
+            PrePadding=3,
+            PostPadding=17,
             AddTime=10,
             Network='C',
             Station='GO02',
             StationRadius=3,
-            LocalEventRadius=1
         )
 
     elif name == Names.California:
@@ -93,7 +90,6 @@ def get_event_info(name):
             PrePadding=8,
             PostPadding=12,
             StationRadius=1,
-            LocalEventRadius=1
         )
 
     elif name == Names.Alaska:
@@ -110,24 +106,22 @@ def get_event_info(name):
             PrePadding=5,
             PostPadding=15,
             StationRadius=2,
-            LocalEventRadius=1.5
         )
 
     elif name == Names.Costa:
         info = dict(
-            Latitude='12.433',
-            Longitude='-86',
-            Time="2011-02-20",
+            Latitude='19.433',
+            Longitude='-155',
+            Time="2005-02-20",
             StartTime="2014-05-05",
             EndTime="2018-02-26",
             Client="IRIS",
             Network="NU",
             Station="BC8A",
             Name="Costa",
-            PrePadding=2,
-            PostPadding=18,
-            StationRadius=4,
-            LocalEventRadius=1.5
+            PrePadding=5,
+            PostPadding=15,
+            StationRadius=1,
         )
 
     elif name == Names.Puerto:
@@ -144,32 +138,31 @@ def get_event_info(name):
             PrePadding=7,
             PostPadding=13,
             StationRadius=3,
-            LocalEventRadius=1
         )
 
     elif name == Names.Utah:
         info = dict(
             Latitude='38',
             Longitude='-112',
-            Time="2005-02-20",
-            StartTime="2006-01-05",
+            Time="2006-04-20",
+            StartTime="2015-10-05",
             EndTime="2018-02-26",
             Client="IRIS",
-            Network="NP",
-            Station="7229",
+            Network="NN",
+            Station="DSP",
             Name="Utah",
             PrePadding=5,
             PostPadding=15,
-            StationRadius=3,
-            LocalEventRadius=1.5
+            StationRadius=5,
         )
 
     if info:
         return MappingProxyType(info)
     raise ValueError(f"Name '{name}' not found")
 
+
 # Retrieving the quake information
-event = get_event_info(os.env['Location'])   # dict containing the information to populate the variables
+event = get_event_info(os.environ['Location']) #get_event_info(os.env['Location'])   # dict containing the information to populate the variables
 
 # Constants
 LATITUDE = event['Latitude']  # Latitude of Event
@@ -180,10 +173,10 @@ CLIENT_NAME = event['Client']  # Client to retrieve event from
 NAME = event['Name'] + 'Quakes'  # Folder name to write spectrograms to
 
 STATION_MAX_RADIUS = event['StationRadius']  # Pick as station within this distance of the event
-MAX_RADIUS = event['LocalEventRadius']  # How far local events can be from the station
+MAX_RADIUS = 1.5  # How far local events can be from the station
 NONLOCAL_MIN_RADIUS = 6  # Min Radius for Nonlocal Events
-NUM_EVENTS = 2000  # How many events to retrieve and write                     # Event time window duration
-NONLOCAL_NUM_EVENTS = 10
+
+NUM_EVENTS = 4000                             # How many events to retrieve and write                     # Event time window duration
 NUM_NOISE_EVENTS = 4000
 
 DURATION = 20  # Time in seconds, centered around the event
@@ -204,6 +197,10 @@ STATION = event.get('Station')
 # Filtering Constants for the Spectrograms
 MIN_FREQ = 1
 MAX_FREQ = 30
+
+# Paths
+WAVEFORMS_PATH = os.path.join(os.getcwd(), f"waveforms/{NAME}")
+SPECTROGRAM_PATH = os.path.join(os.getcwd(), f"spectrograms/{NAME}")
 
 # Code
 client = Client(CLIENT_NAME)
