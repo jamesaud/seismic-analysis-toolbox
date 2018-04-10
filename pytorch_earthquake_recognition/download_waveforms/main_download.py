@@ -15,8 +15,8 @@ if __name__ == '__main__':
     inventory: Inventory
     network: Network
     station: Station
-    local_catalog_events: Catalog
-    nonlocal_catalog_events: Catalog
+    local_catalog: Catalog
+    noise_catalog: Catalog
     local_times: List[UTCDateTime]
     nonlocal_times: List[UTCDateTime]
     noise_times: List[UTCDateTime]

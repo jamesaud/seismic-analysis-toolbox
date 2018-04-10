@@ -162,7 +162,7 @@ def get_event_info(name):
 
 
 # Retrieving the quake information
-event = get_event_info(os.environ['Location']) #get_event_info(os.env['Location'])   # dict containing the information to populate the variables
+event = get_event_info(os.environ.get('Location', 'Utah')) #get_event_info(os.env['Location'])   # dict containing the information to populate the variables
 
 # Constants
 LATITUDE = event['Latitude']  # Latitude of Event
@@ -204,3 +204,5 @@ SPECTROGRAM_PATH = os.path.join(os.getcwd(), f"spectrograms/{NAME}")
 
 # Code
 client = Client(CLIENT_NAME)
+
+assert PRE_PADDING + POST_PADDING == DURATION

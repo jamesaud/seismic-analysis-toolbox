@@ -7,7 +7,7 @@ import glob
 import os
 from .config import *
 from .helpers import get_channel_names, create_directory
-from subprocess import call
+from subprocess import Popen
 
 
 # def remove_borders(path):
@@ -30,7 +30,8 @@ def remove_borders(path):
 
     for file in png_paths:
         print("Trimming: ", file, end='\r')
-        call(["convert", file, "-trim", "+repage", file])
+        Popen(["convert", file, "-trim", "+repage", file])
+
 
 def show_spectrogram(stream):
     figure_list = stream.spectrogram(show=False, title="")
@@ -63,23 +64,22 @@ def write_spectrogram(stream, path):
     figure_list = stream.spectrogram(show=False, title="")
 
     for figure, channel in zip(figure_list, get_channel_names(stream)):
-        if channel in ('HNE', 'HNN', 'HNZ'):
-            axes = figure.gca()
-            axes.set_xlim([0, DURATION])
-            axes.set_ylim([0, MAX_FREQ])
+        axes = figure.gca()
+        axes.set_xlim([0, DURATION])
+        axes.set_ylim([0, MAX_FREQ])
 
-            # Get Rid of Whitespace
-            axes.axis("off")
-            axes.xaxis.set_major_locator(NullLocator())
-            axes.yaxis.set_major_locator(NullLocator())
+        # Get Rid of Whitespace
+        axes.axis("off")
+        axes.xaxis.set_major_locator(NullLocator())
+        axes.yaxis.set_major_locator(NullLocator())
 
-            DPI = figure.get_dpi()
-            figure.set_size_inches(400 / float(DPI), 336 / float(DPI))
-            figure.savefig(f"{path}/{channel}.png", bbox_inches='tight', pad_inches=0, transparent=True)
+        DPI = figure.get_dpi()
+        figure.set_size_inches(400 / float(DPI), 336 / float(DPI))
+        figure.savefig(f"{path}/{channel}.png", bbox_inches='tight', pad_inches=0, transparent=True)
 
-            # Free memory
-            figure.clf()
-            plt.close("ALL")
+        # Free memory
+        figure.clf()
+        plt.close("ALL")
 
     remove_borders(path)  # Remove borders of all the spectrograms
 
@@ -93,14 +93,14 @@ def write_spectrogram_ignore_exceptions(*args, **kwargs):
         return None
 
 
-def write_spectrograms(waveforms, path):
-    for i, stream in enumerate(waveforms):
+def write_spectrograms(waveforms, path, startat=0):
+    for i, stream in enumerate(waveforms, startat):
         dir_path = os.path.join(path, str(i))
         create_directory(dir_path)
         write_spectrogram(stream, dir_path)
 
 
-def async_write_spectrograms(waveforms, path):
+def async_write_spectrograms(waveforms, path, startat=0, ignoreexceptions=True):
     """
     @param waveforms: List[Stream], the waveforms to make spectrograms from.
     @param path: str, The directory to write to
@@ -114,7 +114,7 @@ def async_write_spectrograms(waveforms, path):
     work = []  # Args that will be passed to the write_spectrogram function
 
     # Prep the file paths
-    for i, stream in enumerate(waveforms):
+    for i, stream in enumerate(waveforms, startat):
         dir_path = os.path.join(path, str(i))
         create_directory(dir_path)
 
@@ -125,6 +125,8 @@ def async_write_spectrograms(waveforms, path):
 
     # Run with multiprocess
     pool = Pool()
-    pool.starmap(write_spectrogram_ignore_exceptions, work)  # Map the 'write_spectrogram' function to the work
-
+    if ignoreexceptions:
+        pool.starmap(write_spectrogram_ignore_exceptions, work)  # Map the 'write_spectrogram' function to the work
+    else:
+        pool.starmap(write_spectrogram, work)
     print("\nWrote Files")

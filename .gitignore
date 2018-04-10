@@ -8,5 +8,6 @@ notebooks/Earthquake-audio-activity/
 **/*.wave
 **/*.zip
 **/*.pt
+**/*.7z
 /convnettorch/
 
