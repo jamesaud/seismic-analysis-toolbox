@@ -1,14 +1,14 @@
 
 
-FROM continuumio/anaconda3
+FROM continuumio/anaconda3:5.0.1
 
 RUN conda config --add channels conda-forge
-
-RUN conda install nb_conda -y && conda install obspy -y
 
 RUN apt-get update && apt-get upgrade -y
 
 RUN apt-get update
+
+RUN conda install nb_conda -y && conda install obspy -y
 
 # Need for matplotlib to work in Docker
 RUN apt-get -y install libgl1-mesa-glx
@@ -38,3 +38,5 @@ RUN apt-get install php5 php5-common gcc -y
 RUN apt-get install imagemagick -y
 
 WORKDIR /data
+
+COPY . .

@@ -1,6 +1,6 @@
 
 
-FROM continuumio/anaconda3
+FROM continuumio/anaconda3:5.0.1
 
 RUN conda config --add channels conda-forge
 
@@ -18,9 +18,6 @@ RUN pip install tensorflow
 
 RUN apt-get update && apt-get upgrade -y
 
-
-
-# TEST
 # Pytorch
 RUN apt-get update
 RUN conda install pytorch torchvision cuda80 -c soumith
@@ -31,9 +28,6 @@ RUN pip install cffi
 RUN pip install tensorboardX
 
 RUN apt-get -y install libgl1-mesa-glx   # Need for tensorboardx and matplotlib to work in Docker
-
-
-
 
 # Install GCC
 RUN apt-get install build-essential -y
@@ -50,7 +44,6 @@ RUN cd geos-3.4.2 \
 && make install \
 && cd ..
 
-
 # Install Basemap
 RUN pip install https://github.com/matplotlib/basemap/archive/v1.0.7rel.tar.gz
 
@@ -61,6 +54,21 @@ RUN apt-get install imagemagick -y
 
 # Jupyterlab
 RUN conda install -c conda-forge jupyterlab
+
+# Mount Docker
+RUN  apt-get update && \
+     apt-get -y install apt-transport-https \
+     ca-certificates \
+     curl \
+     gnupg2 \
+     software-properties-common && \
+     curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg > /tmp/dkey; apt-key add /tmp/dkey && \
+     add-apt-repository \
+     "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+     $(lsb_release -cs) \
+     stable" && \
+     apt-get update && \
+     apt-get -y install docker-ce
 
 EXPOSE 8888
 

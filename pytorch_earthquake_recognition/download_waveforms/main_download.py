@@ -1,15 +1,66 @@
 import matplotlib
 matplotlib.use('agg')
 
-from code.config import *
 from code.events import parallel_get_event_times
 from code.waveforms import parallel_write_waveforms
 from obspy.core.event import Catalog
 from code.helpers import *
 from code.async_client import AsyncClient
 import warnings
+import argparse
+from obspy import UTCDateTime
+
+class NotEnoughEvents(Exception):
+    pass
+
+def get_parser():
+    parser = argparse.ArgumentParser(description='Get configuration.')
+    parser.add_argument('--station',
+                        dest='station',
+                        type=str,
+                        required=True,
+                        help='station code')
+
+    parser.add_argument('--network',
+                        dest='network',
+                        type=str,
+                        required=True,
+                        help='network code')
+
+    parser.add_argument('--starttime',
+                        dest='starttime',
+                        type=str,
+                        help='start time')
+
+    parser.add_argument('--endttime',
+                        dest='endtime',
+                        type=str,
+                        help='end time')
+
+    parser.add_argument('--duration',
+                        dest='duration',
+                        type=int,
+                        default=20,
+                        help='duration')
+
+    return parser
 
 if __name__ == '__main__':
+    parser = get_parser()
+    args = parser.parse_args()
+
+    NETWORK = args.network
+    STATION = args.station
+
+    NUM_EVENTS = 6000
+    NUM_NOISE_EVENTS = 8000
+    MAX_RADIUS = 1.5
+    DURATION = args.duration
+    PRE_PADDING = 6
+    POST_PADDING = 14
+    ADD_TIME = 0
+    MIN_EVENTS = 1000 # 300
+
     print("Starting Download Script...")
     # Types
     inventory: Inventory
@@ -28,6 +79,14 @@ if __name__ == '__main__':
     network = inventory.select(NETWORK)[0]
     station = network.select(STATION)[0]
 
+    WAVEFORMS_PATH = os.path.join(os.getcwd(), f"waveforms/{station.latitude}-{station.longitude}")
+
+
+    STARTTIME = args.starttime or (station.start_date + Day(365))
+    ENDTIME = args.endtime or min(station.end_date, UTCDateTime(year=2018, month=3, day=1))
+    NOISE_START = STARTTIME
+    NOISE_END = STARTTIME + Day(60)
+
     # Verifies that the selected station supports 'get_waveforms' - saves time to not run the rest of the code
     assert verify_fsdn(network, station)
 
@@ -44,6 +103,9 @@ if __name__ == '__main__':
                                       limit=NUM_EVENTS,
                                       endtime=ENDTIME
                                       )
+
+    if len(local_catalog) < MIN_EVENTS:
+        raise NotEnoughEvents(f"{len(local_catalog)} is < min_events {MIN_EVENTS}")
 
     # Noise Exclude Events
     noise_catalog = client.get_events(latitude=station.latitude,

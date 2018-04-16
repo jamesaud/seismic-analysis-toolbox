@@ -18,4 +18,4 @@ services:
             - 6006:6006
         volumes:
            - .:/data
-        command: ["--logdir", "./Examples"]
+        command: ["--logdir", "./visualize/runs"]

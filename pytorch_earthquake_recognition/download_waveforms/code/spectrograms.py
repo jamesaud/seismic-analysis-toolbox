@@ -7,7 +7,7 @@ import glob
 import os
 from .config import *
 from .helpers import get_channel_names, create_directory
-from subprocess import Popen
+from subprocess import call
 
 
 # def remove_borders(path):
@@ -30,7 +30,7 @@ def remove_borders(path):
 
     for file in png_paths:
         print("Trimming: ", file, end='\r')
-        Popen(["convert", file, "-trim", "+repage", file])
+        call(["convert", file, "-trim", "+repage", file])
 
 
 def show_spectrogram(stream):

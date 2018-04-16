@@ -1,4 +1,5 @@
 from .config import *
+from obspy import UTCDateTime
 from obspy.core.inventory import Inventory, Station, Network
 from obspy.clients.fdsn import Client
 import random

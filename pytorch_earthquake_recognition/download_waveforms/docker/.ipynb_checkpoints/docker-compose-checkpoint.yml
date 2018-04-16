@@ -1,0 +1,5 @@
+services:
+  waveform-dind:
+    volumes:
+      - ..:/data 
+    command: 'python main_download.py --network xx --station yy'

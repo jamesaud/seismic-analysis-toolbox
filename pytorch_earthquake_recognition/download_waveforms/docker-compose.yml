@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  waveform-dind:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+
+  spectro-dind:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
