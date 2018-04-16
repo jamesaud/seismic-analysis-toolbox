@@ -12,13 +12,13 @@ from collections import namedtuple
 
 CLIENT_NAME = 'IRIS'
 client = AsyncClient(CLIENT_NAME)
+img_name = 'downloadwaveforms_waveform'
 
 inventory = client.get_stations(channel='HN*', startafter=UTCDateTime(year=1990, month=1, day=1))
 
 cmd = f"docker run -v {os.getcwd()}/waveforms:/data/waveforms -e PYTHONUNBUFFERED=0 \
-downloadwaveforms_waveform-dind python main_download.py " + "--station {station} --network {network}"
+{img_name} python main_download.py " + "--station {station} --network {network}"
 
-img_name = 'downloadwaveforms_waveform-dind'
 colors = ['red', 'green', 'blue', 'orange', 'yellow', 'white', 'blue']
 
 
@@ -52,7 +52,7 @@ def run_container(command):
 commands = get_docker_commands(inventory)
 
 while True:
-    num_containers = get_num_running_containers('downloadwaveforms_waveform-dind')
+    num_containers = get_num_running_containers(img_name)
     if num_containers <= 4:
         run_container(next(commands))
     print_logs(img_name)
