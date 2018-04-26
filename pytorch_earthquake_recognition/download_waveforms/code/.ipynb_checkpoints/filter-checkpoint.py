@@ -17,7 +17,6 @@ def filter_waveform(stream: Stream, event_start, pre_padding, post_padding):
     pad = 5
     window_start = event_start - pre_padding
     window_end = event_start + post_padding
-    resample(stream, 100)
     stream = stream.slice(window_start - pad, window_end + pad)
     stream.filter('bandpass', freqmin=MIN_FREQ, freqmax=MAX_FREQ)
     return stream.slice(window_start + pad, window_end + pad)
@@ -36,12 +35,9 @@ def filter_waveforms(waveforms: List[Stream], pre_padding=PRE_PADDING,
         event_start = stream[0].stats.starttime + padding
         window_start = event_start - pre_padding
         window_end = event_start + post_padding
-        resample(stream, 100)
         stream.filter('bandpass', freqmin=MIN_FREQ, freqmax=MAX_FREQ)
         stream.trim(window_start, window_end)
 
     return waveforms
 
 
-def resample(stream, rate):
-    return stream.resample(rate)

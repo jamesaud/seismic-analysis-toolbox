@@ -22,13 +22,13 @@ def get_channel_names(stream):
     """ Returns a list of names of each component, in the order they appear in the stream """
     return [trace.stats.channel for trace in stream]
 
-def verify_fsdn(network, station):
+def verify_fsdn(network, station, starttime=STARTTIME):
     """
     Makes a call to the server. Requires 'HN*' component, and the ability to 'get_waveforms' from the station
     Sometimes the stations are missing data, so it's important to actually make a request and get the waveform data.
     """
     client = Client(CLIENT_NAME)
-    time = STARTTIME + Day(365)
+    time = starttime + Day(365)
     waves = client.get_waveforms(network.code, station.code, "*", "HN*", time, time + DURATION)
     return True
 

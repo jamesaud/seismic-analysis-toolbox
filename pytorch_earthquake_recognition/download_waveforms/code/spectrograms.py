@@ -34,7 +34,7 @@ def remove_borders(path):
 
 
 def show_spectrogram(stream):
-    figure_list = stream.spectrogram(show=False, title="")
+    figure_list = stream.spectrogram(show=False, title="", per_lap=.95)
 
     for figure, channel in zip(figure_list, get_channel_names(stream)):
         if channel in ('HNE', 'HNN', 'HNZ'):

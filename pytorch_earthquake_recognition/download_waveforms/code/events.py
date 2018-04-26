@@ -48,7 +48,8 @@ def get_event_time(station, event, give_anyways=False) -> UTCDateTime:
         if not give_anyways:
             return None
         p_arrival = 0
-    event_time += p_arrival
+        s_arrival = 0
+    event_time += s_arrival
     return event_time
 
 

@@ -14,7 +14,7 @@ CLIENT_NAME = 'IRIS'
 client = AsyncClient(CLIENT_NAME)
 img_name = 'downloadwaveforms_waveform'
 
-inventory = client.get_stations(channel='HN*', startafter=UTCDateTime(year=2000, month=1, day=1))
+inventory = client.get_stations(channel='HN*', startafter=UTCDateTime(year=1990, month=1, day=1))
 
 cmd = f"docker run -v {os.getcwd()}/waveforms:/data/waveforms -e PYTHONUNBUFFERED=0 \
 {img_name} python main_download.py " + "--station {station} --network {network}"

@@ -88,7 +88,19 @@ if __name__ == '__main__':
     NOISE_END = STARTTIME + Day(60)
 
     # Verifies that the selected station supports 'get_waveforms' - saves time to not run the rest of the code
-    assert verify_fsdn(network, station)
+    def validate_and_adjust_starttime(tries):
+        global STARTTIME
+        for i in range(tries):
+            try:
+                return verify_fsdn(network, station, STARTTIME)
+            except Exception:
+                STARTTIME += Day(180)
+                
+        raise Exception("Couldn't download from server.")
+    
+    attempts = 10
+    validate_and_adjust_starttime(attempts)
+
 
     # Visualize the Station
     with warnings.catch_warnings():
