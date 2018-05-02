@@ -54,12 +54,12 @@ if __name__ == '__main__':
 
     NUM_EVENTS = 6000
     NUM_NOISE_EVENTS = 8000
-    MAX_RADIUS = 1.5
+    MAX_RADIUS = 3
     DURATION = args.duration
     PRE_PADDING = 6
     POST_PADDING = 14
     ADD_TIME = 0
-    MIN_EVENTS = 1000 # 300
+    MIN_EVENTS = 500 # 300
 
     print("Starting Download Script...")
     # Types
@@ -84,8 +84,6 @@ if __name__ == '__main__':
 
     STARTTIME = args.starttime or (station.start_date + Day(365))
     ENDTIME = args.endtime or min(station.end_date, UTCDateTime(year=2018, month=3, day=1))
-    NOISE_START = STARTTIME
-    NOISE_END = STARTTIME + Day(60)
 
     # Verifies that the selected station supports 'get_waveforms' - saves time to not run the rest of the code
     def validate_and_adjust_starttime(tries):
@@ -98,9 +96,11 @@ if __name__ == '__main__':
                 
         raise Exception("Couldn't download from server.")
     
-    attempts = 10
+    attempts = 30
     validate_and_adjust_starttime(attempts)
-
+   
+    NOISE_START = STARTTIME
+    NOISE_END = STARTTIME + Day(60)
 
     # Visualize the Station
     with warnings.catch_warnings():

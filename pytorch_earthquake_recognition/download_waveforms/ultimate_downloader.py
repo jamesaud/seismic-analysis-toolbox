@@ -14,7 +14,8 @@ CLIENT_NAME = 'IRIS'
 client = AsyncClient(CLIENT_NAME)
 img_name = 'downloadwaveforms_waveform'
 
-inventory = client.get_stations(channel='HN*', startafter=UTCDateTime(year=2000, month=1, day=1))
+inventory = client.get_stations(channel='HN*', startafter=UTCDateTime(year=1980, month=1, day=1))
+count = 0
 
 cmd = f"docker run -v {os.getcwd()}/waveforms:/data/waveforms -e PYTHONUNBUFFERED=0 \
 {img_name} python main_download.py " + "--station {station} --network {network}"
@@ -54,7 +55,7 @@ commands = get_docker_commands(inventory)
 
 while True:
     num_containers = get_num_running_containers(img_name)
-    if num_containers <= 6:
+    if num_containers <= 15:
         run_container(next(commands))
     print_logs(img_name)
     time.sleep(1)

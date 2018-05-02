@@ -54,8 +54,8 @@ if __name__ == '__main__':
         print("Writing local")
         local_waveforms = read_waveforms(local_path)
         local_waves = filter_waveforms(local_waveforms,
-                                       pre_padding=11,
-                                       post_padding=9,
+                                       pre_padding=7,
+                                       post_padding=13,
                                        padding=20)
         async_write_spectrograms(local_waves, os.path.join(SPECTROGRAM_PATH, "local"))
 

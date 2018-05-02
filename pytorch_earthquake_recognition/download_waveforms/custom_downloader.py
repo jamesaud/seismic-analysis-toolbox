@@ -181,7 +181,7 @@ def get_event_info(name):
     raise ValueError(f"Name '{name}' not found")
 
 if __name__ == '__main__':
-    event_name = 'California'
+    event_name = 'Puerto'
     event = get_event_info(event_name)   # dict containing the information to populate the variables
 
     NETWORK = event['Network']
@@ -197,7 +197,7 @@ if __name__ == '__main__':
     MIN_EVENTS = 500 # 300
 
 
-    # CUSTOM VARIABLES
+    # CUSTOM 
     # stations = (get_all_stations(2))
     # from code.helpers import get_valid_stations
     # get_valid_stations(stations)
@@ -222,6 +222,8 @@ if __name__ == '__main__':
     network = inventory.select(NETWORK)[0]
     station = network.select(STATION)[0]
 
+    
+
     WAVEFORMS_PATH = os.path.join(os.getcwd(), f"waveforms/{station.latitude}-{station.longitude}")
 
 
@@ -244,9 +246,7 @@ if __name__ == '__main__':
     attempts = 10
     validate_and_adjust_starttime(attempts)
 
-    print(station.latitude, station.longitude)
-    print(WAVEFORMS_PATH)
-    raise ValueError()
+    
     # Visualize the Station
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -270,7 +270,8 @@ if __name__ == '__main__':
                                       starttime=NOISE_START,
                                       endtime=NOISE_END,
                                       maxradius=10
-                                      )
+                                                                 starttime=NOISE_START,
+           )
 
     print("LOCAL EVENTS:", len(local_catalog))
     print("NOISE EVENTS to Exclude:", len(noise_catalog))
@@ -282,10 +283,10 @@ if __name__ == '__main__':
 
     # Code
     local_times = parallel_get_event_times(local_catalog, station)
-    _noise_times = parallel_get_event_times(noise_catalog, station,
+    exclude_noise_times = parallel_get_event_times(noise_catalog, station,
                                             give_anyways=True)  # Even if PREM arrival can't be computed, get event times
 
-    noise_times = get_noise_times(_noise_times,
+    noise_times = get_noise_times(exclude_noise_times,
                                   NOISE_START,  # startafter
                                   NOISE_END,  # endbefore
                                   NUM_NOISE_EVENTS,
