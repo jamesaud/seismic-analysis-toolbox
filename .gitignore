@@ -10,4 +10,5 @@ notebooks/Earthquake-audio-activity/
 **/*.pt
 **/*.7z
 /convnettorch/
+workspace.code-workspace
 
