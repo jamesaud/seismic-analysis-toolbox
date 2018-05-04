@@ -23,6 +23,3 @@ Great! Now on localhost:8000, you'll have a Jupyter Notebook running with all of
 This is some basic algorithms implemented on Obspy to analyze our data with conventional techniques like STA/LTA and Template Matching:
 
 https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/notebooks/notebooks-practice/Earthquakes%20in%20Tanzania.ipynb
-
-
-##### Note - this code was specifically created to built a dataset for my neural network. Some settings may need to be tweaked (inside of config.py) for your situation.
