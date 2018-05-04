@@ -1,5 +1,6 @@
 # earthquake-recognition
 
+<<<<<<< HEAD
 I am researching using neural nets for earthquake detection.
 
 Pretty messy right now, I'll clean up the Repo at the end of this internship.
@@ -24,3 +25,10 @@ https://github.com/jamesaud/earthquake-recognition/tree/neuralnet/pytorch_earthq
 ##### Basic Data Processing:
 
 https://github.com/jamesaud/earthquake-recognition/blob/waveforms/notebooks/Tanzania/Earthquakes%20in%20Tanzania.ipynb
+=======
+Pretty messy right now.
+
+An interesting notebook to look at:
+
+https://github.com/jamesaud/earthquake-recognition/blob/master/notebooks/Tanzania/Earthquakes%20in%20Tanzania.ipynb
+>>>>>>> waveforms

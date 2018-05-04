@@ -9,4 +9,11 @@ notebooks/Earthquake-audio-activity/
 /convnettorch/
 **/**/runs/
 **/**/models/
-
+**/*.zip
+**/*.pt
+**/*.7z
+/convnettorch/
+workspace.code-workspace
+.idea/
+.ipynb_checkpoints/
+.DS_Store

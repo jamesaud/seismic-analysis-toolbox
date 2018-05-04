@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  waveform:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+
+  spectro:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
