@@ -44,7 +44,6 @@ def get_docker_commands(inventory: Inventory):
     return [command.split() for command in commands]
 
 
-
 def get_num_running_containers(image_name):
     result = run(['docker', 'ps'], stdout=PIPE, stderr=PIPE, universal_newlines=True)
     return len(re.findall(image_name, result.stdout))

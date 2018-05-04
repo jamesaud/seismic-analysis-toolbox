@@ -49,6 +49,7 @@ if __name__ == '__main__':
     noise_path = os.path.join(WAVEFORMS_PATH, "noise")
     local_path = os.path.join(WAVEFORMS_PATH, "local")
 
+    os.makedirs(SPECTROGRAM_PATH)
 
     def write_local():
         print("Writing local")
