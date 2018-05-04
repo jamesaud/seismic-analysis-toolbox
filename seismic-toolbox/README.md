@@ -46,6 +46,11 @@ python ultimate_downloader.py
 python ultimate_writer.py
 ```
 
+## Tests
+
+A few relevant tests are here:
+
+https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic-toolbox/code/tests
 
 
 
