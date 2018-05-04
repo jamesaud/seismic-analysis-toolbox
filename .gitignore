@@ -11,4 +11,6 @@ notebooks/Earthquake-audio-activity/
 **/*.7z
 /convnettorch/
 workspace.code-workspace
-
+.idea/
+.ipynb_checkpoints/
+.DS_Store
