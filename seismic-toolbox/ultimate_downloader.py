@@ -12,7 +12,7 @@ from collections import namedtuple
 
 CLIENT_NAME = 'IRIS'
 client = AsyncClient(CLIENT_NAME)
-img_name = 'waveforms_waveform'
+img_name = 'seismictoolbox-waveform'
 
 inventory = client.get_stations(channel='HN*', startafter=UTCDateTime(year=1980, month=1, day=1))
 count = 0
