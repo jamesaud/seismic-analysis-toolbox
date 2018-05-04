@@ -54,5 +54,7 @@ https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic-toolbox
 
 
 
-##### Note - this code was specifically created to built a dataset for my neural network. Some settings may need to be tweaked (inside of config.py) for your situation.
+## Notes
+
+This code was specifically created to built a dataset for my neural network. Some settings may need to be tweaked (inside of config.py) for your situation.
 
