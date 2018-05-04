@@ -45,3 +45,9 @@ Then run:
 python ultimate_downloader.py
 python ultimate_writer.py
 ```
+
+
+
+
+##### Note - this code was specifically created to built a dataset for my neural network. Some settings may need to be tweaked (inside of config.py) for your situation.
+
