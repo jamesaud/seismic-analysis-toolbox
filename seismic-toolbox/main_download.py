@@ -82,8 +82,7 @@ if __name__ == '__main__':
 
     WAVEFORMS_PATH = os.path.join(os.getcwd(), f"waveforms/{station.latitude}-{station.longitude}-minmag{MIN_MAGNITUDE}")
 
-
-    STARTTIME = args.starttime or (station.start_date + Day(365))
+    STARTTIME = args.starttime or station.start_date
     ENDTIME = args.endtime or min(station.end_date, UTCDateTime(year=2018, month=3, day=1))
 
     # Verifies that the selected station supports 'get_waveforms' - saves time to not run the rest of the code

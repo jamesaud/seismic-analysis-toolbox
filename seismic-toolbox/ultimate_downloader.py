@@ -14,6 +14,7 @@ CLIENT_NAME = 'IRIS'
 client = AsyncClient(CLIENT_NAME)
 img_name = 'seismictoolbox-waveform'
 
+print("Retrieving Stations from Server...")
 inventory = client.get_stations(channel='HN*', startafter=UTCDateTime(year=1980, month=1, day=1))
 count = 0
 
@@ -25,15 +26,22 @@ colors = ['red', 'green', 'blue', 'yellow', 'white', 'blue']
 
 codes = namedtuple('Codes', ['station', 'network'])
 
+def path_exists(station):
+    if os.path.exists(f'waveforms/{station.latitude}-{station.longitude}') or os.path.exists(f'waveforms/{station.latitude}-{station.longitude}-minmag1'):
+        return True
+    return False
+
+
 def get_docker_commands(inventory: Inventory):
     commands = [cmd.format(station=station.code, network=network.code)
                 for network in inventory
                 for station in network 
-                if not os.path.exists(f'waveforms/{station.latitude}--{station.longitude}')]
+                if not path_exists(station)]
 
     random.shuffle(commands)
-    for command in commands:
-        yield command.split()
+    return [command.split() for command in commands]
+
+
 
 def get_num_running_containers(image_name):
     result = run(['docker', 'ps'], stdout=PIPE, stderr=PIPE, universal_newlines=True)
@@ -51,11 +59,12 @@ def run_container(command):
     result = Popen(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
 
 
-commands = get_docker_commands(inventory)
+commands = iter(get_docker_commands(inventory))
 
+# Run infinitely to keep downloading waveforms
 while True:
     num_containers = get_num_running_containers(img_name)
-    if num_containers <= 9:
+    if num_containers <= 10:
         run_container(next(commands))
     print_logs(img_name)
     time.sleep(1)

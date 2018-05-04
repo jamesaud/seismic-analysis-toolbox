@@ -1,7 +1,0 @@
-from obspy.clients.fdsn import Client
-from obspy import UTCDateTime
-
-client = Client("http://10.254.144.226/")
-t = UTCDateTime("2016-06-15T00:00:00.000")
-st = client.get_waveforms("TZ", "CES06", "", "HNZ", t, t + 60*120)
-st.plot(type="dayplot") 
