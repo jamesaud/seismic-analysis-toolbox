@@ -16,10 +16,16 @@ docker-compose up
 
 Great! Now on localhost:8000, you'll have a Jupyter Notebook running with all of the required packages. 
 
-(TODO: Specify versions of packages and put them in .sh & requirements.txt)
+(TODO: Specify versions of packages and put them in install.sh & requirements.txt)
 
 ## Basic Waveform Data Processing Example with Obspy
 
 This is some basic algorithms implemented on Obspy to analyze our data with conventional techniques like STA/LTA and Template Matching:
 
 https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/notebooks/notebooks-practice/Earthquakes%20in%20Tanzania.ipynb
+
+## Seismic Toolbox Example
+
+Refer to the files in the ReadMe here:
+
+https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic-toolbox
