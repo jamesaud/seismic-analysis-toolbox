@@ -58,3 +58,4 @@ https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic-toolbox
 
 This code was specifically created to built a dataset for my neural network. Some settings may need to be tweaked (inside of config.py) for your situation.
 
+At first this code was written as one big Jupyter file, and then I reformatted it (much nicer now). Howver, in config.py there are still artifacts leftover that need to be cleaned up. More tests need to be written as well.
