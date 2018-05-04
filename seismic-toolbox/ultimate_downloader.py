@@ -12,10 +12,12 @@ from collections import namedtuple
 
 CLIENT_NAME = 'IRIS'
 client = AsyncClient(CLIENT_NAME)
-img_name = 'seismictoolbox-waveform'
+img_name = 'seismictoolbox_waveform'
 
 print("Retrieving Stations from Server...")
 inventory = client.get_stations(channel='HN*', startafter=UTCDateTime(year=1980, month=1, day=1))
+print("Got Stations")
+
 count = 0
 
 cmd = f"docker run -v {os.getcwd()}/waveforms:/data/waveforms -e PYTHONUNBUFFERED=0 \
