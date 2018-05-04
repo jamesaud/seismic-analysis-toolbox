@@ -54,12 +54,13 @@ if __name__ == '__main__':
 
     NUM_EVENTS = 6000
     NUM_NOISE_EVENTS = 8000
-    MAX_RADIUS = 3
+    MAX_RADIUS = 2
     DURATION = args.duration
     PRE_PADDING = 6
     POST_PADDING = 14
     ADD_TIME = 0
-    MIN_EVENTS = 500 # 300
+    MIN_EVENTS = 500
+    MIN_MAGNITUDE = 1
 
     print("Starting Download Script...")
     # Types
@@ -79,7 +80,7 @@ if __name__ == '__main__':
     network = inventory.select(NETWORK)[0]
     station = network.select(STATION)[0]
 
-    WAVEFORMS_PATH = os.path.join(os.getcwd(), f"waveforms/{station.latitude}-{station.longitude}")
+    WAVEFORMS_PATH = os.path.join(os.getcwd(), f"waveforms/{station.latitude}-{station.longitude}-minmag{MIN_MAGNITUDE}")
 
 
     STARTTIME = args.starttime or (station.start_date + Day(365))
@@ -113,7 +114,8 @@ if __name__ == '__main__':
                                       maxradius=MAX_RADIUS,  # Local
                                       starttime=STARTTIME,
                                       limit=NUM_EVENTS,
-                                      endtime=ENDTIME
+                                      endtime=ENDTIME,
+                                      minmagnitude=MIN_MAGNITUDE
                                       )
 
     if len(local_catalog) < MIN_EVENTS:

@@ -55,7 +55,7 @@ commands = get_docker_commands(inventory)
 
 while True:
     num_containers = get_num_running_containers(img_name)
-    if num_containers <= 15:
+    if num_containers <= 9:
         run_container(next(commands))
     print_logs(img_name)
     time.sleep(1)
