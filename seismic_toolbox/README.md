@@ -3,7 +3,7 @@
 
 Most of the code doing the heavy lifting lives in the 'code' module:
 
-https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic-toolbox/code
+https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic_toolbox/code
 
 ## Pipeline
 
@@ -50,8 +50,7 @@ python ultimate_writer.py
 
 A few relevant tests are here:
 
-https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic-toolbox/code/tests
-
+https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic_toolbox/code/tests
 
 
 ## Notes
