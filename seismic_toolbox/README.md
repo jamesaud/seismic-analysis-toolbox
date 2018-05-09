@@ -24,9 +24,9 @@ The solution to this problem, and to several others, is to run in parallel with 
 
 Essentially, the previous 2 steps are parallelized with Docker:
 
-1. Download data from servers https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic-toolbox/ultimate_downloader.py
+1. Download data from servers https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic_toolbox/interactive_downloader.ipynb
 
-2. Write spectrograms  https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic-toolbox/ultimate_writer.py
+2. Write spectrograms  https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic_toolbox/interactive_downloader.ipynb
 
 
 ## Build the Images
