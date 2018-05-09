@@ -18,5 +18,6 @@ workspace.code-workspace
 .ipynb_checkpoints/
 .DS_Store
 spectros_okla/
-waveform_to_spectrogram.py
+waveform_to_spectrograms.py
+create_spectrograms.ipynb
 **/spectrograms/
