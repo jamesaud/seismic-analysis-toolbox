@@ -28,4 +28,4 @@ https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/notebooks/noteb
 
 Refer to the files in the ReadMe here:
 
-https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic-toolbox
+https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic_toolbox

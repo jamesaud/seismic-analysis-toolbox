@@ -3,7 +3,7 @@
 
 Most of the code doing the heavy lifting lives in the 'code' module:
 
-https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic-toolbox/code
+https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic_toolbox/code
 
 ## Pipeline
 
@@ -22,11 +22,11 @@ The biggest problem in the code is MatPlotLib is horribly ineffective at product
 
 The solution to this problem, and to several others, is to run in parallel with Docker containers.
 
-Essentially, the previous 2 steps are parallelized with Docker:
+Essentially, the previous 2 steps are parallelized with Docker (quick and dirty, going to use the Docker-Python API library when I update these files):
 
-1. Download data from servers https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic-toolbox/ultimate_downloader.py
+1. Download data from servers https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic_toolbox/ultimate_downloader.py
 
-2. Write spectrograms  https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic-toolbox/ultimate_writer.py
+2. Write spectrograms  https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic_toolbox/ultimate_writer.py
 
 
 ## Build the Images
@@ -50,8 +50,7 @@ python ultimate_writer.py
 
 A few relevant tests are here:
 
-https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic-toolbox/code/tests
-
+https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic_toolbox/code/tests
 
 
 ## Notes
