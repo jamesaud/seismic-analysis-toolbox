@@ -2,10 +2,9 @@ from .config import *
 from typing import List
 from obspy import Stream
 
+PAD = 5
 
-__all__ = ['filter_waveforms', 'filter_waveform', 'bandpass', 'resample']
-
-def filter_waveform(stream: Stream, event_start, pre_padding, post_padding):
+def filter_waveform(stream: Stream, event_start, pre_padding, post_padding, pad=PAD):
     """
     Start PRE_PADDING before event_time, end POST_PADDING after event_time
     :param stream: stream to use
@@ -14,13 +13,16 @@ def filter_waveform(stream: Stream, event_start, pre_padding, post_padding):
     :param post_padding: time to end after event_start
     :return:
     """
-    pad = 5
     window_start = event_start - pre_padding
     window_end = event_start + post_padding
-    resample(stream, 100)
     stream = stream.slice(window_start - pad, window_end + pad)
+    resample(stream, 100)
     bandpass(stream)
     return stream.slice(window_start + pad, window_end + pad)
+
+
+def filter_waveform_by_time(stream: Stream, start, end, *args, **kwargs):
+    return filter_waveform(stream, start, 0, end - start, *args, **kwargs)
 
 
 def filter_waveforms(waveforms: List[Stream], pre_padding=PRE_PADDING,

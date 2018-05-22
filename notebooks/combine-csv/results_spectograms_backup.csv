@@ -1,0 +1,9 @@
+Name,Amount Correct Noise,Amount Total Noise,Amount Correct Local,Amount Total Local,Total Percent Correct,Epochs
+spectrograms/AmatriceQuakes,754,755,397,397,0.9991319444444444,10
+spectrograms/OklahomaQuakes,765,769,365,383,0.9809027777777778,10
+spectrograms/CaliforniaQuakes,764,769,371,383,0.9852430555555556,10
+spectrograms/PuertoQuakes,655,674,344,350,0.9755859375,10
+spectrograms/SouthAmericaQuakes,743,744,17,24,0.9895833333333334,10
+spectrograms/UtahQuakes,594,714,46,182,0.7142857142857143,10
+spectrograms/CostaQuakes,595,692,215,332,0.791015625,10
+spectrograms/AlaskaQuakes,704,769,332,383,0.8993055555555556,10
