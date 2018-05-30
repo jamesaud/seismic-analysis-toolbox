@@ -7,8 +7,9 @@ cwd = os.getcwd()
 
 IMAGE = 'parallel_waveform_converter'
 WRITE_PATH = '/data/spectrograms'
-READ_PATH = '/data/mseed/GSOK027_7-2014.mseed'
+READ_PATH = '/data/mseed/GSOK029_7-2014.mseed'
 abs_path = lambda path: os.path.join(cwd, path)
+containers = 5
 
 volumes = {abs_path('spectrograms/'): {'bind' : '/data/spectrograms/'},
           abs_path('mseed/'):        {'bind' : '/data/mseed/'}}
@@ -26,5 +27,5 @@ queue = generate_containers(client)
 container = next(queue)
 container.start()
 
-with Parallelize(queue, 15) as batch_job:
+with Parallelize(queue, containers) as batch_job:
     batch_job.start()
