@@ -13,7 +13,7 @@ There are usually 2 steps:
 
 1. Download data from servers (shown here) https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic-toolbox/interactive_downloader.ipynb
 
-2. Process and filter data (as shown here) https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic-toolbox/interactive_writer.ipynb
+2. Process and filter data (as shown here) https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic_toolbox/interactive_writer.ipynb
 
 
 ## Advanced Pipeline
