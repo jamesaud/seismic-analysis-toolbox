@@ -11,7 +11,7 @@ This package was made to help process a lot more data than obspy is built for.
 
 There are usually 2 steps:
 
-1. Download data from servers (shown here) https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic-toolbox/interactive_downloader.ipynb
+1. Download data from servers (shown here) https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic_toolbox/interactive_downloader.ipynb
 
 2. Process and filter data (as shown here) https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic_toolbox/interactive_writer.ipynb
 
