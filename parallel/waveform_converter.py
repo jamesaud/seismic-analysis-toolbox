@@ -7,10 +7,14 @@ from obspy.core.stream import read
 import os
 import sys
 
-from code import spectrograms 
-from code.helpers import slide, create_directory
-from code.filter import filter_waveform_by_time
-from code.spectrograms import write_spectrogram
+import sys
+cwd = os.getcwd() 
+sys.path.insert(0, os.path.join(cwd, '../seismic_toolbox'))
+
+from seismic_code import spectrograms 
+from seismic_code.helpers import slide, create_directory
+from seismic_code.filter import filter_waveform_by_time
+from seismic_code.spectrograms import write_spectrogram
 import copy
 
 PAD = 5

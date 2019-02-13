@@ -12,7 +12,7 @@ abs_path = lambda path: os.path.join(cwd, path)
 containers = 5
 
 volumes = {abs_path('spectrograms/'): {'bind' : '/data/spectrograms/'},
-          abs_path('mseed/'):        {'bind' : '/data/mseed/'}}
+           abs_path('mseed/'):        {'bind' : '/data/mseed/'}}
 
 
 def generate_containers(client, start=0, duration=20, period=2000, stop=float('inf'), separation=0):
@@ -23,7 +23,7 @@ def generate_containers(client, start=0, duration=20, period=2000, stop=float('i
         start = end
 
 client = docker.from_env()
-queue = generate_containers(client)
+queue = generate_containers(client, duration=12, period=1800, separation=-6)
 container = next(queue)
 container.start()
 
