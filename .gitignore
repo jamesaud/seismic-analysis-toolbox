@@ -21,3 +21,4 @@ spectros_okla/
 waveform_to_spectrograms.py
 create_spectrograms.ipynb
 **/spectrograms/
+**/images/**

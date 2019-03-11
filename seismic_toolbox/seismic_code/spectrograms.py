@@ -7,6 +7,7 @@ import glob
 import os
 from .config import *
 from .helpers import get_channel_names, create_directory
+from .waveforms import write_waveform
 from subprocess import call
 
 # In IronPython / Jupyter Notebook
@@ -50,7 +51,7 @@ def show_spectrogram(stream):
     plt.show()
 
 
-def write_spectrogram(stream, path):
+def write_spectrogram(stream, path, write_stream=False):
     """
     @param stream: Stream, the file to make a spectrogram from.
                    Each trace should be one component.
@@ -80,8 +81,11 @@ def write_spectrogram(stream, path):
         # Free memory - currently a bug in PLT that doesn't actually always free the memory
         figure.clf()
         plt.close("ALL")
-
+        
     remove_borders(path)  # Remove borders of all the spectrograms
+            
+    if write_stream:
+        write_waveform(stream, os.path.join(path, 'waveform.mseed'))
 
 
 def write_spectrogram_ignore_exceptions(*args, **kwargs):
@@ -89,7 +93,7 @@ def write_spectrogram_ignore_exceptions(*args, **kwargs):
         return write_spectrogram(*args, **kwargs)
     except Exception as e:
         print(type(e))
-        print("Failed to write spectrogram: ", e)
+        print("Failed to write spectrogram: ", e, end='\r')
         return None
 
 
@@ -99,8 +103,7 @@ def write_spectrograms(waveforms, path, startat=0):
         create_directory(dir_path)
         write_spectrogram(stream, dir_path)
 
-
-def async_write_spectrograms(waveforms, path, startat=0, ignoreexceptions=True):
+def async_write_spectrograms(waveforms, path, startat=0, ignoreexceptions=True, write_streams=False):
     """
     :param waveforms: List[Stream], the waveforms to make spectrograms from.
     :param path: str, The directory to write to
@@ -119,8 +122,9 @@ def async_write_spectrograms(waveforms, path, startat=0, ignoreexceptions=True):
         create_directory(dir_path)
 
         # Add the args for each stream
+        # Arguments to the 'write_spectrogram' function
         work.append(
-            (stream, os.path.join(path, str(i)))  # arguments to the 'write_spectrogram' function
+            (stream, os.path.join(path, str(i)), write_streams)  
         )
 
     # Run with multiprocess

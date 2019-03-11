@@ -98,7 +98,9 @@ def get_noise_times(times_to_exclude: List[UTCDateTime],
     :param amount: How many noise windows to generate
     :param duration: How long each event in times_to_exclude and noise window should be, to prevent overlapping
     """
-    exclude = [Time(time - duration / 2, time + duration / 2) for time in times_to_exclude]
+    
+    # Make exclude times the duration 
+    exclude = [Time(time - duration/2, time + duration/2) for time in times_to_exclude]
     exclude.sort()
     noise_times = []
 

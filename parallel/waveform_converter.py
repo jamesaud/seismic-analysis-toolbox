@@ -88,6 +88,7 @@ if __name__ == '__main__':
     write_path = args.write_path
     path = args.read_path
     
+    print(separation)
     print("Reading Stream...")
     stream = read(path)
     print("Filtering Waveforms...")

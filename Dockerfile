@@ -70,6 +70,10 @@ RUN  apt-get update && \
      apt-get update && \
      apt-get -y install docker-ce
 
+RUN pip install --user nodejs
+
+RUN conda install -c conda-forge tqdm==4.31.1
+
 EXPOSE 8888
 
 WORKDIR /data

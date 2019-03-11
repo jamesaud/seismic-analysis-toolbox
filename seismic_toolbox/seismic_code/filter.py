@@ -11,6 +11,7 @@ def filter_waveform(stream: Stream, event_start, pre_padding, post_padding, pad=
     :param event_start: time of the event
     :param pre_padding: time to start before event_start
     :param post_padding: time to end after event_start
+    :param pad: use pad to avoid any artifacts[] will pad before processing and then slice afterwards
     :return:
     """
     window_start = event_start - pre_padding
