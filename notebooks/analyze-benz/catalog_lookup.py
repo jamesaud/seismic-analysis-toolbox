@@ -3,15 +3,16 @@ from datetime import datetime
 from obspy import UTCDateTime
 import pandas as pd
 
-CATALOG_PATH = 'Benz_catalog.csv'
 Timerange = namedtuple('timerange', ['start', 'end'])
 
 def within(time, timerange: Timerange):
     return timerange.start <= time <= timerange.end
     
+    
 def to_timerange(predicted_time):
     start, end = predicted_time.split('--')
     return Timerange(UTCDateTime(start), UTCDateTime(end))
+    
     
 def make_buckets(df):
     predicted_times = df
@@ -21,13 +22,14 @@ def make_buckets(df):
         buckets[row['Guess']].append(time_range) 
     return buckets
 
-def catalog_df(start=None, end=None):
+
+def catalog_df(catalog_path, start=None, end=None):
     """
     Date formats given as a string
     start: '07/01/2014'
     end: '07/31/2014'
     """
-    df = pd.read_csv('Benz_catalog.csv')
+    df = pd.read_csv(catalog_path)
     
     if start is None:
         start = df.iloc[0]['Date']
@@ -48,8 +50,6 @@ def predicted_df(path):
     return df
 
 
-from IPython.display import clear_output
-
 def event_in_catalog(time_range, catalog_times):
     df = catalog_times
     """ Returns the index found in the dataframe, or -1 if not """
@@ -67,6 +67,7 @@ def event_in_catalog(time_range, catalog_times):
             return i
     return - 1
             
+    
 def find_events_in_catalog(predicted_times, catalog_times):
     """ 
     :predicted_times_df: containing "event_start" and "event_end" as columns
