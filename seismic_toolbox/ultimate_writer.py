@@ -7,7 +7,7 @@ import random
 from termcolor import colored
 from functools import partial
 
-img_name = 'seismictoolbox_spectro'
+img_name = 'seismictoolbox_toolbox'
 cwd = os.getcwd()
 CMD = f"""docker run -v {cwd}/waveforms:/data/waveforms 
                      -v {cwd}/spectrograms:/data/spectrograms

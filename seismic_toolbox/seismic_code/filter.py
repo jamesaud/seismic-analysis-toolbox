@@ -11,21 +11,22 @@ def filter_waveform(stream: Stream, event_start, pre_padding, post_padding, pad=
     :param event_start: time of the event
     :param pre_padding: time to start before event_start
     :param post_padding: time to end after event_start
-    :param pad: use pad to avoid any artifacts[] will pad before processing and then slice afterwards
+    :param pad: use pad to avoid any artifacts - will pad time before processing and then slice afterwards
     :return:
     """
     window_start = event_start - pre_padding
     window_end = event_start + post_padding
-    stream = stream.slice(window_start - pad, window_end + pad)
+    stream = stream.slice(window_start - pad, window_end + pad)     # Increase window to avoid artifacts
     resample(stream, 100)
     bandpass(stream)
-    return stream.slice(window_start + pad, window_end + pad)
+    return stream.slice(window_start + pad, window_end + pad)       # Slice to the correct time window
 
 
 def filter_waveform_by_time(stream: Stream, start, end, *args, **kwargs):
     return filter_waveform(stream, start, 0, end - start, *args, **kwargs)
 
 
+# TODO: Use the filter_waveform method in this function
 def filter_waveforms(waveforms: List[Stream], pre_padding=PRE_PADDING,
                      post_padding=POST_PADDING, padding=PADDING) -> List[Stream]:
     """

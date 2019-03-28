@@ -37,6 +37,11 @@ def plot_waveform(waveform, show=True):
     fig = wf.plot(size=SIZE_PIX, handle=True)
     return fig
 
+def image_paths(path):
+    filenames = os.listdir(path)
+    files = [pj(path, filename) for filename in filenames]
+    images = tuple(filter(lambda file: file.endswith('.png'), files))
+    return images
 
 def images_and_waveform(path):
     filenames = os.listdir(path)

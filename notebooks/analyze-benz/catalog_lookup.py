@@ -7,6 +7,10 @@ Timerange = namedtuple('timerange', ['start', 'end'])
 
 def within(time, timerange: Timerange):
     return timerange.start <= time <= timerange.end
+
+
+def time_within(time, start, end):
+    return start <= time <= end
     
     
 def to_timerange(predicted_time):
@@ -45,6 +49,7 @@ def catalog_df(catalog_path, start=None, end=None):
 # Working with a different type of dataframe here
 def predicted_df(path):
     df = pd.read_csv(path)
+    df = df.rename(index=str, columns={"Name": "Time"})
     df = df.drop_duplicates().sort_values(by=['Time'])
     df["event_start"], df["event_end"] = zip(*df['Time'].map(to_timerange))
     return df
@@ -58,14 +63,16 @@ def event_in_catalog(time_range, catalog_times):
     
     # Don't search out of bounds for index error
     indexes = list(range(
-        max(i - 1, 0), 
-        min(i + 1, len(df)-1)
+        max(i - 10, 0), 
+        min(i + 10, len(df)-1)
     ))
         
+    idx_found = []
     for i, row in df.iloc[indexes,:].iterrows():
         if within(row['origintime'], time_range):
-            return i
-    return - 1
+            idx_found.append(i)
+            
+    return idx_found or -1
             
     
 def find_events_in_catalog(predicted_times, catalog_times):

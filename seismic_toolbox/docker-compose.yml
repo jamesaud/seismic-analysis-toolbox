@@ -4,14 +4,4 @@ services:
   toolbox:
     build:
       context: .
-      dockerfile: docker/Dockerfile
-
-  waveform:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
-
-  spectro:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: ./docker/Dockerfile
