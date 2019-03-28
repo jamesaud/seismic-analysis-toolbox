@@ -30,7 +30,7 @@ Essentially, the previous 2 steps are parallelized with Docker (quick and dirty,
 
 
 ## Build the Images
-> docker-compose build
+`docker-compose build`
 
 One image will be built: 
 
