@@ -20,7 +20,6 @@ docker-compose up
 
 Great! Now on localhost:8000, you'll have a Jupyter Notebook running with all of the required packages. 
 
-(TODO: Specify versions of packages and put them in install.sh & requirements.txt)
 
 ## Basic Waveform Data Processing Example with Obspy
 
