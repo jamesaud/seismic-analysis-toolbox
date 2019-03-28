@@ -30,11 +30,11 @@ Essentially, the previous 2 steps are parallelized with Docker (quick and dirty,
 
 
 ## Build the Images
-`docker-compose build`
+> docker-compose build
 
 One image will be built: 
 
-`seismictoolbox-toolbox`
+> seismictoolbox-toolbox
 
 On your host machine, use Anaconda to install requirements.txt in a separate environment:
 
