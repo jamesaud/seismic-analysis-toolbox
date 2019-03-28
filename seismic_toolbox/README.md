@@ -32,17 +32,27 @@ Essentially, the previous 2 steps are parallelized with Docker (quick and dirty,
 ## Build the Images
 > docker-compose build
 
-Two images will be built:
+One image will be built: 
 
-1. seismictoolbox-waveform, for downloading and processing waveforms
-2. seismictoolbox-spectro, for writing and processing spectrograms 
+`seismictoolbox-toolbox`
 
-On your host machine, also use Anaconda with Python 3.6 and install requirements.txt (for TermColor, which isn't really needed).
+On your host machine, use Anaconda to install requirements.txt in a separate environment:
+
+```
+conda create --name download_waveforms --file requirements.txt python=3.7
+
+conda activate download_waveforms
+```
 
 Then run:
 
 ```
 python ultimate_downloader.py
+```
+
+If you want to convert waveforms into spectrograms, use:
+
+```
 python ultimate_writer.py
 ```
 
