@@ -6,11 +6,15 @@ It is also a showcase of some of the work that I have done.
 
 ## Getting Started
 
-Run the following commands to build and run the Jupyter Notebook Docker image:
+Run the following commands build all relevant Docker images:
 
 ```
-docker-compose build
+bash install.sh
+```
 
+Now to run the Jupyter notebook:
+
+```
 docker-compose up
 ```
 
