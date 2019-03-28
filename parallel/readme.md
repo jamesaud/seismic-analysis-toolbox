@@ -1,4 +1,4 @@
-# Parallel Covnerter
+# Parallel Converter
 
 This script converts continuous waveform data to spectrograms in parallel.
 
