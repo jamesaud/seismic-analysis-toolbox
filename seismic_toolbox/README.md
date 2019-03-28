@@ -11,7 +11,7 @@ This package was made to help process a lot more data than obspy is built for.
 
 There are usually 2 steps:
 
-1. Download data from servers (shown here) https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic-toolbox/interactive_downloader.ipynb
+1. Download data from servers (shown here) https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic_toolbox/interactive_downloader.ipynb
 
 2. Process and filter data (as shown here) https://github.com/jamesaud/seismic-analysis-toolbox/blob/master/seismic_toolbox/interactive_writer.ipynb
 
@@ -32,17 +32,27 @@ Essentially, the previous 2 steps are parallelized with Docker (quick and dirty,
 ## Build the Images
 > docker-compose build
 
-Two images will be built:
+One image will be built: 
 
-1. seismictoolbox-waveform, for downloading and processing waveforms
-2. seismictoolbox-spectro, for writing and processing spectrograms 
+> seismictoolbox-toolbox
 
-On your host machine, also use Anaconda with Python 3.6 and install requirements.txt (for TermColor, which isn't really needed).
+On your host machine, use Anaconda to install requirements.txt in a separate environment:
+
+```
+conda create --name download_waveforms --file requirements.txt python=3.7
+
+conda activate download_waveforms
+```
 
 Then run:
 
 ```
 python ultimate_downloader.py
+```
+
+If you want to convert waveforms into spectrograms, use:
+
+```
 python ultimate_writer.py
 ```
 
@@ -55,6 +65,4 @@ https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic_toolbox
 
 ## Notes
 
-This code was specifically created to built a dataset for my neural network. Some settings may need to be tweaked (inside of config.py) for your situation.
-
-At first this code was written as one big Jupyter file, and then I reformatted it (much nicer now). Howver, in config.py there are still artifacts leftover that need to be cleaned up. More tests need to be written as well.
+This code was specifically created to built a dataset for my neural network. Some settings will need to be tweaked for your situation.
