@@ -1,11 +1,11 @@
 import matplotlib
 matplotlib.use('agg')
 
-from code.events import parallel_get_event_times
-from code.waveforms import parallel_write_waveforms
+from seismic_code.events import parallel_get_event_times
+from seismic_code.waveforms import parallel_write_waveforms
 from obspy.core.event import Catalog
-from code.helpers import *
-from code.async_client import AsyncClient
+from seismic_code.helpers import *
+from seismic_code.async_client import AsyncClient
 import warnings
 import argparse
 from obspy import UTCDateTime
@@ -56,13 +56,13 @@ if __name__ == '__main__':
     NUM_NOISE_EVENTS = 1000
     MAX_RADIUS = 4
     DURATION = args.duration
-    PRE_PADDING = 6
-    POST_PADDING = 14
-    ADD_TIME = 0
     MIN_EVENTS = 300
-    MIN_MAGNITUDE = 1
+    MIN_MAGNITUDE = None
+    NOISE_TIMESPAN = Day(60)
+    ATTEMPTS = 30
 
     print("Starting Download Script...")
+
     # Types
     inventory: Inventory
     network: Network
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     WAVEFORMS_PATH = os.path.join(os.getcwd(), f"waveforms/{station.latitude}-{station.longitude}")
 
     STARTTIME = args.starttime or station.start_date
-    ENDTIME = args.endtime or min(station.end_date, UTCDateTime(year=2018, month=3, day=1))
+    ENDTIME = args.endtime or min(station.end_date, UTCDateTime(year=2019, month=3, day=1))
 
     # Verifies that the selected station supports 'get_waveforms' - saves time to not run the rest of the code
     def validate_and_adjust_starttime(tries):
@@ -96,21 +96,15 @@ if __name__ == '__main__':
                 
         raise Exception("Couldn't download from server.")
     
-    attempts = 30
-    validate_and_adjust_starttime(attempts)
+    validate_and_adjust_starttime(ATTEMPTS)
    
     NOISE_START = STARTTIME
-    NOISE_END = STARTTIME + Day(60)
-
-    # Visualize the Station
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        network.select(STATION).plot(projection='local')
+    NOISE_END = STARTTIME + NOISE_TIMESPAN
 
     # Local Events
     local_catalog = client.get_events(latitude=station.latitude,
                                       longitude=station.longitude,
-                                      maxradius=MAX_RADIUS,  # Local
+                                      maxradius=MAX_RADIUS,  # Local events
                                       starttime=STARTTIME,
                                       limit=NUM_EVENTS,
                                       endtime=ENDTIME,
@@ -131,26 +125,23 @@ if __name__ == '__main__':
     print("LOCAL EVENTS:", len(local_catalog))
     print("NOISE EVENTS to Exclude:", len(noise_catalog))
 
-    # Plot Events
+    # Code
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        local_catalog.plot(projection="local")
-
-    # Code
-    local_times = parallel_get_event_times(local_catalog, station)
-    _noise_times = parallel_get_event_times(noise_catalog, station,
-                                            give_anyways=True)  # Even if PREM arrival can't be computed, get event times
+        local_times = parallel_get_event_times(local_catalog, station)
+        _noise_times = parallel_get_event_times(noise_catalog, station,
+                                                give_anyways=True)  # Even if PREM arrival can't be computed, get event times
 
     noise_times = get_noise_times(_noise_times,
-                                  NOISE_START,  # startafter
-                                  NOISE_END,  # endbefore
-                                  NUM_NOISE_EVENTS,
-                                  DURATION)
+                                NOISE_START,  # startafter
+                                NOISE_END,  # endbefore
+                                NUM_NOISE_EVENTS,
+                                DURATION)
     print("Got times")
 
     # Functions
-    end = lambda time: time + PADDING + ADD_TIME
-    start = lambda time: time - PADDING + ADD_TIME
+    end = lambda time: time + PADDING
+    start = lambda time: time - PADDING
 
 
     def create_bulk(times):

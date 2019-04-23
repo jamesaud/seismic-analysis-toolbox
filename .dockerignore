@@ -4,3 +4,8 @@
 **/.git
 **/waveforms
 **/waveforms-locations
+**/mseed/**
+**/data/**
+notebooks/dataset_oklahoma/spectrograms/**
+parallel/spectrograms/**
+**/images/**x

@@ -4,3 +4,4 @@ services:
   waveform_converter:
     build:
       context: .
+      dockerfile: ./docker/Dockerfile

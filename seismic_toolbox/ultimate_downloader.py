@@ -1,8 +1,8 @@
-from termcolor import colored
+from termcolor import colored, cprint
 import matplotlib
 matplotlib.use('agg')
-from code.helpers import *
-from code.async_client import AsyncClient
+from seismic_code.helpers import *
+from seismic_code.async_client import AsyncClient
 from obspy import UTCDateTime
 from subprocess import PIPE, run, Popen
 import re
@@ -10,9 +10,10 @@ import time
 import random
 from collections import namedtuple
 
+NUM_CONTAINERS = 5
 CLIENT_NAME = 'IRIS'
 client = AsyncClient(CLIENT_NAME)
-img_name = 'seismictoolbox_waveform'
+img_name = 'seismictoolbox_toolbox'
 
 print("Retrieving Stations from Server...")
 inventory = client.get_stations(channel='HN*', startafter=UTCDateTime(year=1980, month=1, day=1))
@@ -66,7 +67,7 @@ commands = iter(get_docker_commands(inventory))
 # Run infinitely to keep downloading waveforms
 while True:
     num_containers = get_num_running_containers(img_name)
-    if num_containers <= 10:
+    if num_containers <= NUM_CONTAINERS:
         run_container(next(commands))
     print_logs(img_name)
     time.sleep(1)

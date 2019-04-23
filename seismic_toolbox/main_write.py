@@ -3,10 +3,10 @@ matplotlib.use('agg')
 import argparse
 import os
 import warnings
-from code.config import WAVEFORMS_PATH, SPECTROGRAM_PATH
-from code.spectrograms import async_write_spectrograms
-from code.waveforms import read_waveforms
-from code.filter import filter_waveforms
+from seismic_code.config import WAVEFORMS_PATH, SPECTROGRAM_PATH
+from seismic_code.spectrograms import async_write_spectrograms
+from seismic_code.waveforms import read_waveforms
+from seismic_code.filter import filter_waveforms
 
 
 def valid_type(string):
