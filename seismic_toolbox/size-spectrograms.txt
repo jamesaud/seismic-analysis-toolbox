@@ -1,0 +1,16 @@
+32K	docker
+4.0K	docker-compose.yml
+0	__init__.py
+232K	interactive_downloader.ipynb
+332K	interactive_writer.ipynb
+8.0K	main_download.py
+4.0K	main_write.py
+8.0K	__pycache__
+4.0K	README.md
+4.0K	requirements.txt
+212K	seismic_code
+4.0K	size-spectrograms.txt
+29M	spectrograms
+4.0K	ultimate_downloader.py
+4.0K	ultimate_writer.py
+60G	waveforms

@@ -32,9 +32,11 @@ RUN pip install --user nodejs
 
 RUN conda install -c conda-forge tqdm==4.31.1
 
+RUN conda install tornado=4.5.3 
+
 EXPOSE 8888
 
 WORKDIR /data
 
 # Fix basemap env variable issue
-CMD jupyter lab --notebook-dir=/data --ip='0.0.0.0' --allow-root --port=8888 --no-browser --NotebookApp.token=''
+CMD jupyter lab --notebook-dir=/data --ip='0.0.0.0' --allow-root --port=8888 --no-browser

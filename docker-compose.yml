@@ -12,4 +12,7 @@ services:
         volumes:
             - .:/data
             - /var/run/docker.sock:/var/run/docker.sock   # Docker inside of docker! 
+            - ../earthquake-recognition:/earthquake-recognition
+        command: jupyter lab --notebook-dir=/ --ip='0.0.0.0' --allow-root --port=8888 --no-browser
+
 
