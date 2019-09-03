@@ -5,23 +5,23 @@ import os
 from pprint import pprint
 
 cwd = os.getcwd()
-DEBUG = False                                       # Show the first container's logs to make sure everything is going okay
+DEBUG = True                             # Show the first container's logs to make sure everything is going okay
 IMAGE = 'parallel_waveform_converter'
 WRITE_PATH = '/data/spectrograms/'                              # Write spectrograms/waveforms (in the container)  
 READ_PATH = '/data/mseed/'                                      # Path to MSEED (in the container)
-READ_FILE = os.path.join(READ_PATH, 'GSOK029_7-2014.mseed')     # MSEED File
+READ_FILE = os.path.join(READ_PATH, 'GSOK029_8-2014.mseed')     # MSEED File
 
 abs_path = lambda path: os.path.join(cwd, path)
 
-num_containers = 15              # Number of concurrent containers
+num_containers = 8              # Number of concurrent containers
 duration = 20                   # Duration of the waveform / spectrogram
-separation = -15                # Set to a postivie number to have space in between windows, negative to overlap
+separation = -5                 # Set to a postivie number to have space in between windows, negative to overlap
 start = 0                       # Seconds to start from beginning of waveform  (0 would be the start)
-period = 10000                   # Seconds for each container process from the start 
-                                # shorter time means less figures are written, taking up less memory
-write_spectrograms = False      # Set to False to only write waveforms
+period = 10000                  # Seconds for each container to process 
+                                # Shorter time means less figures are written, taking up less memory per container
+write_spectrograms = True       # Set to False to only write waveforms
 
-volumes = {abs_path('spectrograms/'): {'bind': WRITE_PATH},
+volumes = {abs_path('GSOK029_8_spectrograms/'): {'bind': WRITE_PATH},
            abs_path('mseed/'): {'bind': READ_PATH}}
 
 

@@ -61,6 +61,7 @@ def event_in_catalog(time_range, catalog_times):
     # Find where the time would be in the catalog
     i = df['origintime'].searchsorted(time_range.start)[0]
     
+    # Search nearby indexes, just to be safe
     # Don't search out of bounds for index error
     indexes = list(range(
         max(i - 10, 0), 

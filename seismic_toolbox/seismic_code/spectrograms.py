@@ -103,10 +103,12 @@ def write_spectrograms(waveforms, path, startat=0):
         create_directory(dir_path)
         write_spectrogram(stream, dir_path)
 
-def async_write_spectrograms(waveforms, path, startat=0, ignoreexceptions=True, write_streams=False):
+def async_write_spectrograms(waveforms, path, startat=0, ignoreexceptions=True, write_streams=False, continue_from_previous=False):
     """
     :param waveforms: List[Stream], the waveforms to make spectrograms from.
     :param path: str, The directory to write to
+    :param startat: start at a different integer used for naming the files uniquly
+    :param continue_from_previous: don't rewrite folders 
 
     1. Calls 'write_spectrogram' on each Stream.
     2. Each stream is written to its own folder
@@ -119,7 +121,12 @@ def async_write_spectrograms(waveforms, path, startat=0, ignoreexceptions=True, 
     # Prep the file paths
     for i, stream in enumerate(waveforms, startat):
         dir_path = os.path.join(path, str(i))
+                    
         create_directory(dir_path)
+        
+        # It was already written into
+        if continue_from_previous and os.listdir(dir_path):
+            continue
 
         # Add the args for each stream
         # Arguments to the 'write_spectrogram' function
