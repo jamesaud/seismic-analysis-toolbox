@@ -4,7 +4,7 @@
 
 Most of the code doing the heavy lifting lives in the 'code' module:
 
-https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic_toolbox/code
+https://github.com/jamesaud/seismic-analysis-toolbox/tree/master/seismic_toolbox/seismic_code
 
 ## Pipeline
 
